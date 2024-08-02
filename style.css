@@ -76,6 +76,28 @@ input::placeholder{
   font-size: var(--fs-300);
   font-weight: var(--fw-bold);
 }
+.form-group > .error{
+  grid-row: 1;
+  grid-column: 2;
+  text-align: end;
+  color: var(--clr-accent-400);
+  display: none;
+}
+/* for element with no focus and error is the one that comes after it */
+/* 1st way */
+/* .form-group:has(:not(:focus):invalid) > .error{
+  display: block;
+} */
+/* 2nd way */
+.form-group > :not(:focus):invalid + .error{
+  display: block;
+}
+.form-group.with-error-field{
+  grid-template-columns: 1fr 1fr;
+}
+.form-group.with-error-field > input{
+  grid-column: 1 / -1;
+}
 .button{
   background: var(--clr-neutral-800);
   color: var(--clr-neutral-100);
@@ -92,16 +114,21 @@ input::placeholder{
     var(--clr-accent-500)
   );
 }
+form{
+  isolation: isolate;
+}
 .button:hover::after,
 .button:focus::after{
  content: '';
  position: absolute;
+ z-index: -1;
+ inset: 0;
  background: red;
  inset: 0;
  border-radius: inherit;
  translate: 0 1.5rem;
- filter: blur(1rem);
- opacity: .25;
+ filter: blur(1rem); 
+opacity: .5;
 }
 .checkmark-list {
   display: grid;
